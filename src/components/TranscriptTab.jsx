@@ -7,7 +7,7 @@ const TranscriptTab = ({ transcript, error, loading }) => {
     const theme = useTheme();
     const [showMore, setShowMore] = useState(false);
 
-    if (loading) return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}><CircularProgress /></Box>;    if (error) return <div>{error}</div>;
+    if (loading) return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}><CircularProgress /></Box>;    if (error) return <Typography color={"error"}>{error}</Typography>;
 
     const handleViewMore = () => {
         setShowMore(!showMore);
@@ -36,7 +36,7 @@ const TranscriptTab = ({ transcript, error, loading }) => {
                 onClick={handleViewMore}
                 sx={{ color: theme.palette.primary.main, alignSelf: 'center', margin: 2 }}
             >
-                {showMore ? 'View Less' : 'View More'}
+                {showMore ? 'Ver menos' : 'Ver más'}
             </DefaultButton>
         </Box>
     );

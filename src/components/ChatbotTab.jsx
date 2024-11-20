@@ -5,7 +5,6 @@ import {
     IconButton,
     List,
     ListItem,
-    ListItemText,
     Paper,
     Typography,
     Avatar, CircularProgress
@@ -88,17 +87,17 @@ const TypingIndicator = () => (
 );
 
 
-const ChatbotTab = ({ embeddings, loadingEmbeddings, errorEmbeddings }) => {
-    const { messages, sendMessage, loading } = useChatbot();
+const ChatbotTab = ({ classId, loadingEmbeddings, errorEmbeddings }) => {
+    const { messages, sendMessage, loading } = useChatbot(classId);
     const [input, setInput] = useState('');
     const messagesEndRef = useRef(null);
-
-    if (loadingEmbeddings) return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}><CircularProgress /></Box>;
-    if (errorEmbeddings) return <div>{error}</div>;
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
+
+    if (loadingEmbeddings) return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}><CircularProgress /></Box>;
+    if (errorEmbeddings) return <div>{errorEmbeddings}</div>;
 
     const handleSend = () => {
         if (input.trim() && !loading) {

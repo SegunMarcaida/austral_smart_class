@@ -11,10 +11,10 @@ const useChatbot = (classId) => {
         setLoading(true);
 
         try {
-            const response = await axiosInstance.post('/chat', { prompt: text }, { params: { class_id: classId } });
+            const response = await axiosInstance.post(`/chat`, { prompt: text }, { params: { class_id: classId } });
             const botResponse = { sender: 'bot', text: response.data.body };
             setMessages((prev) => [...prev, botResponse]);
-        } catch (error) {
+        } catch {
             const errorMessage = { sender: 'bot', text: 'Error: Unable to get response from the server.' };
             setMessages((prev) => [...prev, errorMessage]);
         } finally {

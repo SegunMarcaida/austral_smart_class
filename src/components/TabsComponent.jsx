@@ -12,9 +12,8 @@ const TabsComponent = () => {
     const { id } = useParams();
     const [selectedTab, setSelectedTab] = useState(0);
     const { audio } = useAudio();
-    console.log(audio);
 
-    const { processedClass, error, loading } = useProcessedClass(id);
+    const { classData, processedClass, error, loading } = useProcessedClass(id);
 
     const handleListItemClick = (index) => {
         setSelectedTab(index);
@@ -23,7 +22,7 @@ const TabsComponent = () => {
     const className = audio;
 
     return (
-        <Box sx={{ display: 'flex', height: '90%' }}>
+        <Box sx={{ display: 'flex', height: '90%', marginTop: '84.97px' }}>
             <Drawer
                 variant="permanent"
                 anchor="left"
@@ -32,8 +31,8 @@ const TabsComponent = () => {
                         width: 240,
                         backgroundColor: '#2C308D',
                         color: '#fff',
-                        top: '100px',
-                        height: 'calc(100% - 100px)',
+                        top: '84.97px',
+                        height: 'calc(100% - 84.97px)',
                     },
                 }}
             >
@@ -65,6 +64,7 @@ const TabsComponent = () => {
                         selected={selectedTab === 1}
                         onClick={() => handleListItemClick(1)}
                         sx={{
+                            cursor: 'pointer',
                             marginBottom: 2,
                             fontSize: '1.5rem',
                             backgroundColor: selectedTab === 1 ? '#1A1D6C' : 'inherit',
@@ -76,6 +76,7 @@ const TabsComponent = () => {
                         <ListItemText
                             primary="Resumen"
                             sx={{
+                                cursor: 'pointer',
                                 fontSize: '1.2rem', color: '#fff',
                                 '& .MuiTypography-root': { color: '#fff' },
                                 ml:2
@@ -87,6 +88,7 @@ const TabsComponent = () => {
                         selected={selectedTab === 2}
                         onClick={() => handleListItemClick(2)}
                         sx={{
+                            cursor: 'pointer',
                             marginBottom: 2,
                             fontSize: '1.5rem',
                             backgroundColor: selectedTab === 2 ? '#1A1D6C' : 'inherit',
@@ -115,7 +117,7 @@ const TabsComponent = () => {
                     <SummaryTab summary={processedClass?.summary_text} loading={loading} error={error} />
                 )}
                 {selectedTab === 2 && (
-                    <ChatbotTab embeddings={processedClass?.embeddings} loadingEmbeddings={loading} errorEmbeddings={error} />
+                    <ChatbotTab classId={classData?.id} loadingEmbeddings={loading} errorEmbeddings={error} />
                 )}
             </Box>
         </Box>

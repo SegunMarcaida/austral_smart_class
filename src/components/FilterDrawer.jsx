@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
     Drawer,
     Box,
@@ -7,14 +7,12 @@ import {
     MenuItem,
     FormControl,
     InputLabel,
-    Button,
     TextField
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import DefaultButton from "./common/Button.jsx";
-import { useTheme } from '@mui/material/styles';
 import { es } from 'date-fns/locale';
 
 const statusMap = {
@@ -32,7 +30,6 @@ const FilterDrawer = ({ open, onClose, onApplyFilters, classes, filters }) => {
 
 
     useEffect(() => {
-        console.log(filters)
         if (filters) {
             setStartDate(filters.startDate);
             setEndDate(filters.endDate);

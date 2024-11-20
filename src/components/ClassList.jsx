@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
     Table,
     TableBody,
@@ -10,11 +10,10 @@ import {
     Paper,
     Typography,
     CircularProgress,
-    Box,
+    Box, Chip,
 } from "@mui/material";
 import { AccessTime, CheckCircle, Error, Autorenew } from "@mui/icons-material";
 import useGetClasses from "../hooks/useGetClasses.js";
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
@@ -121,11 +120,10 @@ const ClassList = ({ filters, searchValue, onResetFilters }) => {
                 <Table sx={{ border: 'none' }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}></TableCell>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Date</TableCell>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Class Name</TableCell>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Classroom</TableCell>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Status</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Fecha</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Título</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Aula</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Estado</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -133,21 +131,23 @@ const ClassList = ({ filters, searchValue, onResetFilters }) => {
                             <TableRow
                                 key={row.id}
                                 sx={{
+                                    cursor: row.status === 'failed'? 'not-allowed' :'pointer',
                                     borderBottom: `1px solid ${theme.palette.primary.main}`,
-                                    '&:hover': {
+                                    '&:hover': row.status === 'failed' ? {} : {
                                         backgroundColor: `${theme.palette.primary.main}20`,
                                         cursor: 'pointer',
                                     },
                                 }}
-                                onClick={() => handleRowClick(row)}
+                                onClick={() => row.status !== 'failed' && handleRowClick(row)}
                             >
-                                <TableCell>
-                                    <AttachFileIcon sx={{ color: theme.palette.primary.main }} />
-                                </TableCell>
                                 <TableCell>{format(new Date(row.date), 'dd/MM/yyyy')}</TableCell>
                                 <TableCell>{row.audio}</TableCell>
                                 <TableCell>{row.classroom}</TableCell>
-                                <TableCell>{<StatusIcon status={row.status} />}</TableCell>
+                                <TableCell>
+                                    <Chip label={row.status} variant="outlined"
+                                          color={row.status === 'running' ? 'warning' : (row.status === 'failed') ? 'error' : 'success'}
+                                    />
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

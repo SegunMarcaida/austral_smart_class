@@ -29,7 +29,7 @@ const Home = () => {
     return (
         <Box sx={{height: '85%', width: 'calc(100% - 100px) !important', margin: '0 50px'}} gap={'20px'}>
             <Typography variant="h4" mt={4} gutterBottom sx={{color: 'text.primary'}} textAlign={'left'}>
-                Clases Subidas
+                Clases
             </Typography>
             <Box sx={{
                 display: 'flex',

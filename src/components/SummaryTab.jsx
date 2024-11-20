@@ -36,7 +36,7 @@ const SummaryTab = ({summary, error, loading}) => {
                 onClick={handleViewMore}
                 sx={{ color: theme.palette.primary.main, alignSelf: 'center', margin: 2 }}
             >
-                {showMore ? 'View Less' : 'View More'}
+                {showMore ? 'Ver menos' : 'Ver más'}
             </DefaultButton>
         </Box>
     );

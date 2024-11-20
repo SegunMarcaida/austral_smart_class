@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import axiosInstance from "../api/axiosInstance.js";
 
 const useGetClasses = () => {
@@ -11,7 +10,7 @@ const useGetClasses = () => {
         const fetchClasses = async () => {
             try {
                 const response = await axiosInstance.get('/all');
-                setClasses(response.data);
+                setClasses(response.data.body);
             } catch (err) {
                 setError(err);
             } finally {
