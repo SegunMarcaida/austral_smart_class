@@ -121,19 +121,19 @@ const ChatbotTab = ({ classId, loadingEmbeddings, errorEmbeddings }) => {
                         <ListItem
                             key={index}
                             sx={{
-                                justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start',
-                                ml:  msg.sender === 'user' ? 0 : 5,
-                                width: msg.sender === 'user' ? 'auto' : '80%',
+                                justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
+                                ml:  msg.role === 'user' ? 0 : 5,
+                                width: msg.role === 'user' ? 'auto' : '80%',
                             }}
                         >
-                            <Box sx={msg.sender === 'user' ? styles.userBubble : styles.botBubble}>
-                                {msg.sender !== 'user' && (
+                            <Box sx={msg.role === 'user' ? styles.userBubble : styles.botBubble}>
+                                {msg.role !== 'user' && (
                                     <Avatar src={australitoAvatar} alt="Australito Avatar" sx={styles.avatar} />
                                 )}
                                 <Typography
-                                    sx={{color: msg.sender === 'user' ? '#FFFFFF !important': '#000 !important'}}
+                                    sx={{color: msg.role === 'user' ? '#FFFFFF !important': '#000 !important'}}
                                 >
-                                    {msg.text}
+                                    {msg.content}
                                 </Typography>
                             </Box>
                         </ListItem>
