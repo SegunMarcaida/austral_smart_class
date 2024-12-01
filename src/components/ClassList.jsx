@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import {
     Table,
     TableBody,
@@ -12,29 +12,28 @@ import {
     CircularProgress,
     Box, Chip,
 } from "@mui/material";
-import { AccessTime, CheckCircle, Error, Autorenew } from "@mui/icons-material";
 import useGetClasses from "../hooks/useGetClasses.js";
-import { useTheme } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
-import { format } from 'date-fns';
-import { useAudio } from "../context/AudioContext.jsx";
+import {useTheme} from '@mui/material/styles';
+import {useNavigate} from 'react-router-dom';
+import {format} from 'date-fns';
+import {useAudio} from "../context/AudioContext.jsx";
 import DefaultButton from "./common/Button.jsx";
 
-const StatusIcon = ({ status }) => {
+const StatusChip = ({status}) => {
     switch (status) {
         case "completed":
-            return <CheckCircle color="success" />;
+            return <Chip label="Completado" variant="outlined" color='success' />;
         case "running":
-            return <Autorenew color="primary" />;
+            return <Chip label="En progreso" variant="outlined" color='warning' />;
         case "failed":
-            return <Error color="error" />;
+            return <Chip label="Error" variant="outlined" color='error' />;
         default:
-            return <AccessTime color="action" />;
+            return <Chip label="Error" variant="outlined" color='error' />;
     }
 };
 
-const ClassList = ({ filters, searchValue, onResetFilters }) => {
-    const { classes, loading, error } = useGetClasses();
+const ClassList = ({filters, searchValue, onResetFilters}) => {
+    const {classes, loading, error} = useGetClasses();
     const [page, setPage] = useState(0);
     const [filteredClasses, setFilteredClasses] = useState([]);
     const [isFiltering, setIsFiltering] = useState(false);
@@ -42,7 +41,7 @@ const ClassList = ({ filters, searchValue, onResetFilters }) => {
     const rowsPerPage = 12;
     const theme = useTheme();
     const navigate = useNavigate();
-    const { setAudio } = useAudio();
+    const {setAudio} = useAudio();
 
     useEffect(() => {
         setIsFiltering(true);
@@ -81,15 +80,15 @@ const ClassList = ({ filters, searchValue, onResetFilters }) => {
 
     if (loading || isFiltering || isPageLoading) {
         return (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh'}}>
-                <CircularProgress />
+            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh'}}>
+                <CircularProgress/>
             </Box>
         );
     }
 
     if (error) {
         return (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
                 <Typography variant="h6" color="error">
                     Error loading classes
                 </Typography>
@@ -99,12 +98,18 @@ const ClassList = ({ filters, searchValue, onResetFilters }) => {
 
     if (filteredClasses.length === 0) {
         return (
-            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '70vh' }}>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '70vh'
+            }}>
                 <Typography variant="h6">
                     {areFiltersApplied() ? "No hay clases que se ajusten a los filtros aplicados" : "No hay clases disponibles"}
                 </Typography>
                 {areFiltersApplied() && (
-                    <DefaultButton variant="outlined" color="secondary" onClick={onResetFilters} sx={{ mt: 2 }}>
+                    <DefaultButton variant="outlined" color="secondary" onClick={onResetFilters} sx={{mt: 2}}>
                         Restablecer Filtros
                     </DefaultButton>
                 )}
@@ -115,15 +120,15 @@ const ClassList = ({ filters, searchValue, onResetFilters }) => {
     const paginatedData = filteredClasses.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     return (
-        <Paper elevation={0} sx={{ boxShadow: 'none' }}>
+        <Paper elevation={0} sx={{boxShadow: 'none'}}>
             <TableContainer>
-                <Table sx={{ border: 'none' }}>
+                <Table sx={{border: 'none'}}>
                     <TableHead>
                         <TableRow>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Fecha</TableCell>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Título</TableCell>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Aula</TableCell>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Estado</TableCell>
+                            <TableCell sx={{fontWeight: 'bold', fontSize: '1.1rem'}}>Fecha</TableCell>
+                            <TableCell sx={{fontWeight: 'bold', fontSize: '1.1rem'}}>Título</TableCell>
+                            <TableCell sx={{fontWeight: 'bold', fontSize: '1.1rem'}}>Aula</TableCell>
+                            <TableCell sx={{fontWeight: 'bold', fontSize: '1.1rem'}}>Estado</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -131,7 +136,7 @@ const ClassList = ({ filters, searchValue, onResetFilters }) => {
                             <TableRow
                                 key={row.id}
                                 sx={{
-                                    cursor: row.status === 'failed'? 'not-allowed' :'pointer',
+                                    cursor: row.status === 'failed' ? 'not-allowed' : 'pointer',
                                     borderBottom: `1px solid ${theme.palette.primary.main}`,
                                     '&:hover': row.status === 'failed' ? {} : {
                                         backgroundColor: `${theme.palette.primary.main}20`,
@@ -144,9 +149,7 @@ const ClassList = ({ filters, searchValue, onResetFilters }) => {
                                 <TableCell>{row.audio}</TableCell>
                                 <TableCell>{row.classroom}</TableCell>
                                 <TableCell>
-                                    <Chip label={row.status} variant="outlined"
-                                          color={row.status === 'running' ? 'warning' : (row.status === 'failed') ? 'error' : 'success'}
-                                    />
+                                    <StatusChip status={row.status} />
                                 </TableCell>
                             </TableRow>
                         ))}
